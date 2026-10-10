@@ -14,4 +14,4 @@ Primary Directory: /workspace/factory-pilot (existing Codex Cloud environment)
 
 ## Next action / recovery
 
-Finish the completion-summary PR and repository cleanup if still pending; consult that PR's receipt for the final result. When complete, no implementation scope is active. Further product work requires a new authorized continuation. Preserve the live Worker/domain, existing publisher and durable Issue/PR evidence.
+Completion-summary and cleanup record: [PR #9](https://github.com/kcloud1/factory-pilot/pull/9). Consult its receipt for the final state; finish that same PR and repository cleanup only if still pending. When complete, no implementation scope is active. Further product work requires a new authorized continuation. Preserve the live Worker/domain, existing publisher and durable Issue/PR evidence.
