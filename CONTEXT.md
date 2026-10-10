@@ -7,10 +7,10 @@ Primary Directory: /workspace/factory-pilot (existing Codex Cloud environment)
 ## Current truth
 
 - Factory M3/M4 completed; the Cloudflare Worker at factory-pilot.amitk.life is deployed **only** through the existing GitHub Actions publisher. Do not deploy from the Codex workspace.
-- M9 [Issue #3](https://github.com/kcloud1/factory-pilot/issues/3) is the current Codex Cloud setup-adoption milestone. [PR #4](https://github.com/kcloud1/factory-pilot/pull/4) contains the project setup guide and ENV pointer.
-- A real cloud task on PR #4 candidate `e6f5db5e731a30c9ee95c6464027fe04cfa8c8ff` passed Node 24, `npm run check` and `npm run dry-run` once, without deployment. Evidence: [Issue #3 comment](https://github.com/kcloud1/factory-pilot/issues/3#issuecomment-6102454875).
-- No new app runtime behavior or release is being proposed by M9.
+- M9 Issue #3 and PR #4 are completed and merged. The existing cloud environment and focused checks remain reusable; do not repeat the completed proof.
+- Active product scope: [Issue #5](https://github.com/kcloud1/factory-pilot/issues/5), release overview with full SHA, honest metadata comparison and release navigation. Amit's current GO authorizes one cohesive PR and review/merge when repository and applicable release gates pass.
+- No AWS integration or M11 work belongs to this milestone. The existing pinned publisher, Worker, domain and credential boundary remain unchanged.
 
 ## Next action / recovery
 
-Resolve the [P1 stale recovery-context finding](https://github.com/kcloud1/factory-pilot/pull/4#discussion_r4239292083) in the **same PR #4**, review the small documentation diff, then squash-merge and close Issue #3 if GitHub gates are clear. No repeat cloud proof or deployment.
+Complete Issue #5's one product PR, run the existing check and dry-run, review the exact candidate, and merge only when applicable release gates pass. Report deployment from the existing Actions run and live evidence, never from merge alone. Keep completion evidence in the owning Issue/PR.
