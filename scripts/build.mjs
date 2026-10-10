@@ -1,16 +1,29 @@
-import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { execFileSync } from 'node:child_process';
+import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
 
 // Stamp the exact checkout; reject an Actions context that does not match it.
-const sourceSha = execFileSync('git', ['rev-parse', 'HEAD'], { encoding: 'utf8' }).trim();
-if (!/^[0-9a-f]{40}$/.test(sourceSha) || (process.env.GITHUB_SHA && process.env.GITHUB_SHA !== sourceSha)) {
-  throw new Error('Build requires the exact source checkout');
+const sourceSha = execFileSync("git", ["rev-parse", "HEAD"], {
+  encoding: "utf8",
+}).trim();
+if (
+  !/^[0-9a-f]{40}$/.test(sourceSha) ||
+  (process.env.GITHUB_SHA && process.env.GITHUB_SHA !== sourceSha)
+) {
+  throw new Error("Build requires the exact source checkout");
 }
-const release = { marker: 'factory-pilot-v1', source_sha: sourceSha, data: 'fictional', pipeline: 'github-actions' };
-await rm('dist', { recursive: true, force: true });
-await mkdir('dist', { recursive: true });
-await cp('public', 'dist', { recursive: true });
-const html = await readFile('dist/index.html', 'utf8');
-await writeFile('dist/index.html', html.replaceAll('__SOURCE_SHA__', sourceSha));
-await writeFile('dist/release.json', JSON.stringify(release, null, 2) + '\n');
+const release = {
+  marker: "factory-pilot-v1",
+  source_sha: sourceSha,
+  data: "fictional",
+  pipeline: "github-actions",
+};
+await rm("dist", { recursive: true, force: true });
+await mkdir("dist", { recursive: true });
+await cp("public", "dist", { recursive: true });
+const html = await readFile("dist/index.html", "utf8");
+await writeFile(
+  "dist/index.html",
+  html.replaceAll("__SOURCE_SHA__", sourceSha),
+);
+await writeFile("dist/release.json", JSON.stringify(release, null, 2) + "\n");
 console.log(`Built ${release.marker} from ${sourceSha}`);

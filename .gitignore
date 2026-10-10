@@ -1,5 +1,15 @@
+# Local and temporary material
+.env
+.env.*
+!.env.example
+*.log
 node_modules/
+__pycache__/
+.pytest_cache/
+.terraform/
+.AGENTS-temp/
+tmp/
+# Pilot build and cloud-workspace simulation
 dist/
 .wrangler/
 .dev.vars*
-.env*
