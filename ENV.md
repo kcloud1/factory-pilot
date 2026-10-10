@@ -4,6 +4,7 @@ Status: READY (M3 live-proven; M4 source update pending controller release)
 
 - Repository: public kcloud1/factory-pilot; cloud workspace /workspace/factory-pilot.
 - Application development: existing managed Codex Cloud environment reused for M4; no new environment or credentials.
+- M9 Codex Cloud startup: [project-owned guide](docs/CLOUD_SETUP.md); existing environment, Node 24, lockfile and repo scripts only. Deployment remains GitHub Actions-only.
 - Development: Node 24, npm, locked Wrangler 4; dependency-free browser HTML/CSS/JS.
 - Hosting: static assets only, one approved factory-pilot Cloudflare Worker in existing dev1; exact custom domain factory-pilot.amitk.life in amitk.life. Domain authority: Wrangler custom_domain route, no separate DNS writer.
 - Release branch: protected main confirmed through GitHub branch readback. Full protection details return 403.
