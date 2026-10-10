@@ -8,7 +8,7 @@ Date: 2026-10-10 (Asia/Singapore)
 Managed cloud environment ccarenv_b64_Y2NhcmVudl81ZGRkMDMzZjRjMjA4MTkxYWM4YmU5OTk4YmQ4NWY4Mw, connected/running with current observations, workspace /workspace/factory-pilot, Git origin kcloud1/factory-pilot. No laptop/local Codex CLI. Runtime reports no bound secrets or outbound identities; this does not describe GitHub Actions secret availability. No secret values fetched or printed.
 
 ## App verification
-- Node syntax checks and exact-checkout build PASS.
+- Node syntax checks and exact-checkout build PASS. CI initially rejected the PR build because GitHub ignores attempts to override its reserved GITHUB_SHA (PR merge-ref SHA). Corrected workflow passes EXPECTED_SOURCE_SHA for the explicitly checked-out head; build still rejects mismatch. A negative mismatch check confirms the guard remains active.
 - Wrangler 4.149.0 deploy --dry-run PASS; only seven dist asset files packaged, no backend bindings or provider write.
 - Wrangler --local in cloud workspace: HTTP 200, CSP/security headers present; missing page and /AGENTS.md return 404.
 - Chromium preview check 1 PASS: factory-pilot-v1, visible marker's full SHA equals release.json, demo action responds “Demo check passed: 6 of 6 fictional services healthy. No cloud APIs called.”

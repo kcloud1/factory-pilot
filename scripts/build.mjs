@@ -5,9 +5,12 @@ import { execFileSync } from "node:child_process";
 const sourceSha = execFileSync("git", ["rev-parse", "HEAD"], {
   encoding: "utf8",
 }).trim();
+// GitHub reserves GITHUB_SHA (a merge ref on PR events). Use a custom
+// expectation for the PR checkout; on releases the push SHA is authoritative.
+const expectedSha = process.env.EXPECTED_SOURCE_SHA ?? process.env.GITHUB_SHA;
 if (
   !/^[0-9a-f]{40}$/.test(sourceSha) ||
-  (process.env.GITHUB_SHA && process.env.GITHUB_SHA !== sourceSha)
+  (expectedSha && expectedSha !== sourceSha)
 ) {
   throw new Error("Build requires the exact source checkout");
 }
