@@ -339,36 +339,23 @@
             <div class="panel-heading">
               <div>
                 <h2 id="activity-title">Recent activity</h2>
-                <p>A quiet day is a good day.</p>
+                <p>Demo actions and release metadata, clearly separated.</p>
               </div>
               <span class="activity-dot"></span>
             </div>
-            <ol class="activity-list" id="activity-list">
-              <li>
-                <span class="event-icon deploy">↗</span>
-                <div>
-                  <strong>Edge gateway updated</strong>
-                  <p>Release v2.8.1 completed successfully</p>
-                  <small>12 minutes ago · Demo</small>
-                </div>
-              </li>
-              <li>
-                <span class="event-icon">✓</span>
-                <div>
-                  <strong>Scheduled health check passed</strong>
-                  <p>6 of 6 services responded normally</p>
-                  <small>28 minutes ago · Demo</small>
-                </div>
-              </li>
-              <li>
-                <span class="event-icon scale">⇄</span>
-                <div>
-                  <strong>Fleet capacity balanced</strong>
-                  <p>Traffic distributed across both regions</p>
-                  <small>1 hour ago · Demo</small>
-                </div>
-              </li>
-            </ol>
+            <div class="activity-controls">
+              <label class="region-select"><span class="sr-only">Activity type</span>
+                <select id="activity-filter">
+                  <option value="all">All activity</option>
+                  <option value="demo">Demo activity</option>
+                  <option value="release">Release metadata</option>
+                </select>
+              </label>
+              <small id="activity-count" role="status" aria-live="polite">0 shown · 0 retained</small>
+            </div>
+            <p class="activity-note">Latest 8 events from this page session. Reload starts a new session. Metadata checks do not verify CI or deployment.</p>
+            <ol class="activity-list" id="activity-list" tabindex="0" aria-label="Session activity"></ol>
+            <p class="activity-empty" id="activity-empty" hidden>No retained activity matches this filter. Run a demo check or recheck release metadata.</p>
           </section>
         </div>
         <div
