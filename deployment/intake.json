@@ -1,0 +1,6 @@
+{
+  "application": "factory-pilot",
+  "purpose_and_data": {"purpose": "Fictional public Cloud Operations dashboard proving Codex Cloud delivery", "sensitivity": "public"},
+  "visibility_and_domain": {"repository_visibility": "public", "application_visibility": "public", "hostname": "factory-pilot.amitk.life"},
+  "deployment_and_budget": {"pipeline": "github-actions", "monthly_budget_usd": "0", "paid_services": "forbidden", "previews": "disabled"}
+}

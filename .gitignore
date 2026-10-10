@@ -1,11 +1,5 @@
-# Local and temporary material
-.env
-.env.*
-!.env.example
-*.log
 node_modules/
-__pycache__/
-.pytest_cache/
-.terraform/
-.AGENTS-temp/
-tmp/
+dist/
+.wrangler/
+.dev.vars*
+.env*
