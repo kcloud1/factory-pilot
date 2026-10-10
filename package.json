@@ -1,0 +1,15 @@
+{
+  "name": "factory-pilot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --check public/app.js && node --check scripts/build.mjs",
+    "dev": "npm run build && wrangler dev --local",
+    "dry-run": "npm run build && wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "4.149.0"
+  }
+}

@@ -9,3 +9,7 @@ __pycache__/
 .terraform/
 .AGENTS-temp/
 tmp/
+# Pilot build and cloud-workspace simulation
+dist/
+.wrangler/
+.dev.vars*
