@@ -81,6 +81,47 @@ themeButton.addEventListener("click", () => {
 const sourceSha = $("release-marker").dataset.sourceSha;
 $("source-sha").textContent = sourceSha.slice(0, 7);
 $("source-sha").title = sourceSha;
+const releaseMarker = $("release-marker").dataset.releaseMarker;
+function receiptState(state, title, detail) {
+  $("release-receipt").dataset.state = state;
+  $("receipt-status").textContent = title;
+  $("receipt-detail").textContent = detail;
+}
+async function checkRelease() {
+  const button = $("recheck-release");
+  button.disabled = true;
+  receiptState("pending", "Checking release metadata…", "Comparing this page with its release receipt.");
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 8000);
+  try {
+    const response = await fetch("/release.json", {
+      cache: "no-store",
+      signal: controller.signal,
+    });
+    if (!response.ok) throw new Error("Release receipt unavailable");
+    const receipt = await response.json();
+    if (
+      !receipt || Array.isArray(receipt) ||
+      Object.keys(receipt).sort().join(",") !== "data,marker,pipeline,source_sha" ||
+      typeof receipt.marker !== "string" || !/^factory-pilot-v[1-9][0-9]*$/.test(receipt.marker) ||
+      typeof receipt.source_sha !== "string" || !/^[0-9a-f]{40}$/.test(receipt.source_sha) ||
+      receipt.pipeline !== "github-actions" || receipt.data !== "fictional"
+    ) {
+      receiptState("unavailable", "Invalid release metadata", "The receipt has an unexpected format. Asset identity could not be confirmed; recheck or review the release run.");
+    } else if (receipt.source_sha !== sourceSha || receipt.marker !== releaseMarker) {
+      receiptState("mismatch", "Release metadata differs", `The receipt reports ${receipt.marker} at ${receipt.source_sha}. This page may be from an earlier release. Reload the page and recheck.`);
+    } else {
+      receiptState("matched", "Release metadata matches", "This page and release.json report the same version and source SHA. CI and provider deployment status are not checked here.");
+    }
+  } catch {
+    receiptState("unavailable", "Release metadata unavailable", "The receipt could not be read within 8 seconds. Asset identity could not be confirmed; recheck or review the release run.");
+  } finally {
+    clearTimeout(timeout);
+    button.disabled = false;
+  }
+}
+$("recheck-release").addEventListener("click", checkRelease);
+checkRelease();
 function selectedServices() {
   return services.filter(
     (service) =>
@@ -161,10 +202,15 @@ $("health-check").addEventListener("click", () => {
   while ($("activity-list").children.length > 3)
     $("activity-list").lastElementChild.remove();
 });
-document.querySelectorAll(".nav-item").forEach((link) =>
-  link.addEventListener("click", () => {
-    document
-      .querySelectorAll(".nav-item")
-      .forEach((item) => item.classList.toggle("active", item === link));
-  }),
-);
+function updateNavigation() {
+  const links = [...document.querySelectorAll(".nav-item")];
+  const current = links.find((link) => link.hash === location.hash) ?? links[0];
+  links.forEach((link) => {
+    link.classList.toggle("active", link === current);
+    if (link === current) link.setAttribute("aria-current", "location");
+    else link.removeAttribute("aria-current");
+  });
+  $("current-section").textContent = current.dataset.sectionLabel;
+}
+addEventListener("hashchange", updateNavigation);
+updateNavigation();

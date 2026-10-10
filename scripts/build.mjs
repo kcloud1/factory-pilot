@@ -15,7 +15,7 @@ if (
   throw new Error("Build requires the exact source checkout");
 }
 const release = {
-  marker: "factory-pilot-v2",
+  marker: "factory-pilot-v3",
   source_sha: sourceSha,
   data: "fictional",
   pipeline: "github-actions",
@@ -26,7 +26,8 @@ await cp("public", "dist", { recursive: true });
 const html = await readFile("dist/index.html", "utf8");
 await writeFile(
   "dist/index.html",
-  html.replaceAll("__SOURCE_SHA__", sourceSha),
+  html.replaceAll("__SOURCE_SHA__", sourceSha)
+    .replaceAll("__RELEASE_MARKER__", release.marker),
 );
 await writeFile("dist/release.json", JSON.stringify(release, null, 2) + "\n");
 console.log(`Built ${release.marker} from ${sourceSha}`);

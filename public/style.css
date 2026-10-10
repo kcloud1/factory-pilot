@@ -954,6 +954,112 @@ footer {
 .not-found a {
   color: var(--purple);
 }
+.release-panel {
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+}
+.nav-item:not(.active) .nav-indicator {
+  visibility: hidden;
+}
+.release-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  margin: 24px 28px;
+}
+.release-facts dt {
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+.release-facts dd {
+  margin: 0;
+  font-weight: 600;
+}
+.release-source {
+  flex: 1;
+  min-width: 240px;
+}
+.release-source code {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+.release-link,
+.release-source a {
+  color: var(--purple);
+}
+.release-link:hover,
+.release-source a:hover {
+  text-decoration: underline;
+}
+.release-verification,
+.release-evidence {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 28px;
+}
+.release-receipt {
+  flex: 1;
+  min-width: 220px;
+  border-left: 3px solid var(--muted);
+  padding-left: 14px;
+  overflow-wrap: anywhere;
+}
+.release-receipt[data-state="matched"] {
+  border-color: var(--green);
+}
+.release-receipt[data-state="mismatch"] {
+  border-color: var(--purple);
+}
+.release-receipt p,
+.release-evidence p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 5px 0 0;
+}
+.release-evidence {
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+  padding-top: 20px;
+  align-items: flex-start;
+}
+.release-evidence > div:first-child {
+  flex: 1;
+  min-width: 220px;
+}
+.release-evidence strong {
+  font-size: 12px;
+}
+.release-evidence-links {
+  display: grid;
+  gap: 6px;
+  font-size: 12px;
+}
+#recheck-release:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+@media (max-width: 600px) {
+  .release-panel {
+    margin-bottom: 16px;
+  }
+  .release-panel .panel-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .release-facts {
+    margin: 20px 16px;
+  }
+  .release-verification,
+  .release-evidence {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
 @media (min-width: 1600px) {
   body {
     font-size: 15px;
@@ -1261,6 +1367,7 @@ footer {
   }
   .sidebar nav {
     width: 100%;
+    flex-wrap: wrap;
     justify-content: space-between;
   }
   .nav-item {

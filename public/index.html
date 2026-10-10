@@ -29,11 +29,13 @@
       </div>
       <p class="nav-caption">WORKSPACE</p>
       <nav>
-        <a class="nav-item active" href="#overview"
+        <a class="nav-item active" href="#overview" data-section-label="Overview"
           ><span>◫</span> Overview <span class="nav-indicator"></span></a
-        ><a class="nav-item" href="#fleet"
+        ><a class="nav-item" href="#release" data-section-label="Release"
+          ><span>◇</span> Release</a
+        ><a class="nav-item" href="#fleet" data-section-label="Service fleet"
           ><span>▦</span> Service fleet <span class="nav-count">6</span></a
-        ><a class="nav-item" href="#activity"><span>↗</span> Activity</a>
+        ><a class="nav-item" href="#activity" data-section-label="Activity"><span>↗</span> Activity</a>
       </nav>
       <div class="side-bottom">
         <div class="sandbox-card">
@@ -52,7 +54,7 @@
     <div class="shell">
       <header class="topbar">
         <div class="breadcrumb">
-          Workspace <span>/</span> <strong>Overview</strong>
+          Workspace <span>/</span> <strong id="current-section">Overview</strong>
         </div>
         <div class="top-actions">
           <span class="fictional"><span></span> Fictional environment</span
@@ -90,6 +92,35 @@
             </button>
           </div>
         </div>
+        <section class="panel release-panel" id="release" aria-labelledby="release-title">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">THIS DASHBOARD RELEASE</p>
+              <h2 id="release-title">Release overview</h2>
+              <p>Trace the page you are viewing back to its source.</p>
+            </div>
+            <a class="quiet-pill release-link" href="/release.json">View release.json ↗</a>
+          </div>
+          <dl class="release-facts">
+            <div><dt>Release version</dt><dd>__RELEASE_MARKER__</dd></div>
+            <div class="release-source"><dt>Page source SHA</dt><dd><a id="release-source-link" href="https://github.com/kcloud1/factory-pilot/commit/__SOURCE_SHA__"><code>__SOURCE_SHA__</code></a></dd></div>
+            <div><dt>Publisher</dt><dd>GitHub Actions</dd></div>
+          </dl>
+          <div class="release-verification">
+            <div class="release-receipt" data-state="pending" id="release-receipt" role="status" aria-live="polite" aria-atomic="true">
+              <strong id="receipt-status">Checking release metadata…</strong>
+              <p id="receipt-detail">Comparing this page with its release receipt.</p>
+            </div>
+            <button class="theme-toggle" id="recheck-release" type="button" disabled>Recheck metadata</button>
+          </div>
+          <div class="release-evidence">
+            <div><strong>CI &amp; deployment evidence</strong><p>Matching metadata confirms asset identity only. Review this SHA's checks and release run for publication status. Demo health checks use fictional data.</p></div>
+            <div class="release-evidence-links">
+              <a class="release-link" href="https://github.com/kcloud1/factory-pilot/commit/__SOURCE_SHA__/checks">Review source checks ↗</a>
+              <a class="release-link" href="https://github.com/kcloud1/factory-pilot/actions?query=branch%3Amain">Open release runs ↗</a>
+            </div>
+          </div>
+        </section>
         <section class="status-banner" aria-label="Fleet health">
           <span class="status-orbit" aria-hidden="true">✓</span>
           <div>
@@ -353,7 +384,8 @@
             class="release"
             id="release-marker"
             data-source-sha="__SOURCE_SHA__"
-            >factory-pilot-v2 <span>·</span>
+            data-release-marker="__RELEASE_MARKER__"
+            >__RELEASE_MARKER__ <span>·</span>
             <code id="source-sha">__SOURCE_SHA__</code></span
           ><span>All metrics are fictional.</span>
         </footer>
