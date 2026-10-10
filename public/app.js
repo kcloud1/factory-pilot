@@ -82,10 +82,47 @@ const sourceSha = $("release-marker").dataset.sourceSha;
 $("source-sha").textContent = sourceSha.slice(0, 7);
 $("source-sha").title = sourceSha;
 const releaseMarker = $("release-marker").dataset.releaseMarker;
+const activityEvents = [];
+function renderActivity() {
+  const filter = $("activity-filter").value;
+  const events = activityEvents.filter((event) => filter === "all" || event.kind === filter);
+  $("activity-list").replaceChildren(...events.map((event) => {
+    const row = document.createElement("li");
+    const icon = document.createElement("span");
+    icon.className = event.kind === "release" ? "event-icon deploy" : "event-icon";
+    icon.textContent = event.kind === "release" ? "◇" : "✓";
+    icon.setAttribute("aria-hidden", "true");
+    const detail = document.createElement("div");
+    const title = document.createElement("strong");
+    title.textContent = event.title;
+    const body = document.createElement("p");
+    body.textContent = event.body;
+    const context = document.createElement("small");
+    const time = document.createElement("time");
+    time.dateTime = event.at.toISOString();
+    time.textContent = `${event.at.toISOString().slice(0, 19).replace("T", " ")} UTC`;
+    context.append(`${event.kind === "release" ? "Release metadata" : "Demo"} · `, time);
+    detail.append(title, body, context);
+    row.append(icon, detail);
+    return row;
+  }));
+  $("activity-empty").hidden = events.length !== 0;
+  $("activity-count").textContent = `${events.length} shown · ${activityEvents.length} retained`;
+}
+function recordActivity(kind, title, body) {
+  activityEvents.unshift({ kind, title, body, at: new Date() });
+  activityEvents.length = Math.min(activityEvents.length, 8);
+  renderActivity();
+}
+$("activity-filter").addEventListener("change", renderActivity);
+recordActivity("demo", "Demo snapshot loaded", "Six fictional services across two regions. This is illustrative data, not a cloud health observation.");
 function receiptState(state, title, detail) {
   $("release-receipt").dataset.state = state;
   $("receipt-status").textContent = title;
   $("receipt-detail").textContent = detail;
+  if (state !== "pending") {
+    recordActivity("release", title, `${detail} Page: ${releaseMarker} · ${sourceSha}.`);
+  }
 }
 async function checkRelease() {
   const button = $("recheck-release");
@@ -185,22 +222,8 @@ $("health-check").addEventListener("click", () => {
   $("demo-result").textContent = message;
   $("demo-result").classList.add("visible");
   $("check-time").textContent = "DEMO CHECK PASSED";
-  const event = document.createElement("li");
-  const icon = document.createElement("span");
-  icon.className = "event-icon";
-  icon.textContent = "✓";
-  const detail = document.createElement("div");
-  const title = document.createElement("strong");
-  title.textContent = "Demo health check passed";
-  const body = document.createElement("p");
-  body.textContent = `${count} of ${count} fictional services healthy`;
-  const time = document.createElement("small");
-  time.textContent = "Just now · Demo";
-  detail.append(title, body, time);
-  event.append(icon, detail);
-  $("activity-list").prepend(event);
-  while ($("activity-list").children.length > 3)
-    $("activity-list").lastElementChild.remove();
+  const region = $("region").selectedOptions[0].textContent;
+  recordActivity("demo", "Demo health check passed", `${region}: ${count} of ${count} fictional services healthy. No cloud APIs called.`);
 });
 function updateNavigation() {
   const links = [...document.querySelectorAll(".nav-item")];
