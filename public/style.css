@@ -1196,17 +1196,6 @@ footer {
   .region-panel {
     display: none;
   }
-  .activity-list {
-    display: flex;
-    gap: 20px;
-  }
-  .activity-list li {
-    flex: 1;
-    padding-bottom: 0;
-  }
-  .activity-list li:before {
-    display: none;
-  }
   footer {
     flex-wrap: wrap;
   }
