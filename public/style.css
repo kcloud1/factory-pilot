@@ -958,6 +958,9 @@ footer {
   margin-bottom: 24px;
   padding-bottom: 24px;
 }
+.nav-item:not(.active) .nav-indicator {
+  visibility: hidden;
+}
 .release-facts {
   display: flex;
   flex-wrap: wrap;
