@@ -15,7 +15,7 @@ if (
   throw new Error("Build requires the exact source checkout");
 }
 const release = {
-  marker: "factory-pilot-v1",
+  marker: "factory-pilot-v2",
   source_sha: sourceSha,
   data: "fictional",
   pipeline: "github-actions",
