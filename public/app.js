@@ -107,10 +107,24 @@ function renderFleet() {
       : `${region === "east" ? "822" : "462"}<span class="metric-unit">K</span>`;
   $("chart-total").textContent =
     region === "all" ? "1,284,602" : region === "east" ? "822,145" : "462,457";
-  $("latency").textContent =
-    region === "west" ? "47" : region === "east" ? "38" : "42";
-  $("spend").textContent =
-    region === "all" ? "184" : region === "east" ? "117" : "67";
+  const latencies = filtered
+    .map((service) => service.latency)
+    .sort((a, b) => a - b);
+  const midpoint = Math.floor(latencies.length / 2);
+  const median =
+    latencies.length % 2
+      ? latencies[midpoint]
+      : (latencies[midpoint - 1] + latencies[midpoint]) / 2;
+  $("latency").textContent = median;
+  // Integer cents keep the two regions consistent with the fleet total.
+  const regionSpend = { east: 11720, west: 6700 };
+  const spendCents =
+    region === "all"
+      ? regionSpend.east + regionSpend.west
+      : regionSpend[region];
+  $("spend").textContent = Math.floor(spendCents / 100);
+  $("spend-cents").textContent =
+    `.${String(spendCents % 100).padStart(2, "0")}`;
   $("health-detail").textContent =
     `Your fictional fleet is running smoothly across ${region === "all" ? "2 regions" : `the ${region} region`}.`;
   document
